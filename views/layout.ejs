@@ -163,56 +163,10 @@ footer .container {
     </style>
   </head>
   <body>
-    <header>
-      <div class="container">
-        <h1>My Website</h1>
-        <nav>
-          <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <%- include("partials/nav")%>
 
-    <main>
-      <div class="login-container">
-        <h2>Login</h2>
-        <p><%= description %></p>
-        <% if (data.length > 0) { %>
-        <table class="data-table">
-          <% data.forEach((d) => { %>
-          <tr>
-            <td><%= d.nama %></td>
-            <td><%= d.kelas %></td>
-          </tr>
-          <% }); %>
-        </table>
-        <% } else { %>
-        <p>Belum tersedia data</p>
-        <% } %>
+    <%- body%>
 
-        <form action="/login" method="POST" class="login-form">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required />
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required />
-          </div>
-          <button type="submit" class="login-btn">Login</button>
-          <a href="#" class="forgot-password">Forgot Password?</a>
-        </form>
-      </div>
-    </main>
-
-    <footer>
-      <div class="container">
-        <p>&copy; 2025 My Website. All Rights Reserved.</p>
-      </div>
-    </footer>
+    <%- include("partials/footer")%>
   </body>
 </html>
