@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title%></title>
+    <style>
+      /* Reset some default styles */
+      body,
+      h1,
+      h2,
+      p,
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+      }
+
+      /* Container styling */
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* Header styles */
+      header {
+        background-color: #333;
+        color: white;
+        padding: 1em 0;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 1.5em;
+        text-align: center;
+      }
+
+      /* Navigation styles */
+      nav {
+        text-align: center;
+        margin-top: 10px;
+      }
+      .nav-links {
+        list-style: none;
+        padding: 0;
+      }
+      .nav-links li {
+        display: inline;
+        margin: 0 10px;
+      }
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      .nav-links a:hover {
+        text-decoration: underline;
+      }
+
+      /* Main content styles */
+      main {
+        padding: 2em 0;
+        background: #f4f4f4;
+        text-align: center;
+      }
+      main h2 {
+        color: #333;
+        margin-bottom: 0.5em;
+      }
+
+      /* Footer styles */
+      footer {
+        background-color: #333;
+        color: white;
+        padding: 1em 0;
+        text-align: center;
+        margin-top: 20px;
+      }
+      footer p {
+        margin: 0;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include("navigation") %>
+    <div><%- body %></div>
+  </body>
+</html>
