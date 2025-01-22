@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const morgan = require("morgan");
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
@@ -7,7 +8,8 @@ const port = 3000;
 
 app.set("view engine", "ejs");
 app.use(expressLayouts);
-app.use(morgan('dev'));
+// app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname,"public")));
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
