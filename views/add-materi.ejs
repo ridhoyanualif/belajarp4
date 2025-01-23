@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %>></title>
+</head>
+<body>
+    <main>
+        <div class="login-container">
+            <h2><%= title %></h2>
+            <form action="/add-materi" method="POST" class="login-form">
+                <div class="form-group">
+                    <label for="judul">Judul</label>
+                    <input type="text" id="judul" name="judul" required>
+                </div>
+                <div class="form-group">
+                    <label for="narsum">Narasumber</label>
+                    <input type="text" id="narsum" name="narsum" required>
+                </div>
+                <button type="submit" class="login-btn">Submit</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

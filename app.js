@@ -1,6 +1,7 @@
 const express = require("express");
+const db = require("./config");
 const path = require("path");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 const expressLayouts = require('express-ejs-layouts');
 const app = express();
 const fs = require("fs");
@@ -10,6 +11,8 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 // app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname,"public")));
+app.use(express.urlencoded({ extended: true })); // Parses form data
+
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
@@ -25,30 +28,96 @@ fs.readFile("docs/www.txt", (err,data) => {
     }
 });
 
-const data = [
-    {
-        nama: "ridho",
-        kelas: "99"
-    },
-    {
-        nama: "jovan",
-        kelas: "99"
-    }
-]
+// const data = [
+//     {
+//         nama: "ridho",
+//         kelas: "99"
+//     },
+//     {
+//         nama: "jovan",
+//         kelas: "99"
+//     }
+// ]
 
 
 app.get("/", (req, res) => {
     // res.sendFile("./view/index.html", { root: __dirname});
-    res.render("index", {title : 'Belajar', description: desc, data});
+    // res.render("index", {title : 'Belajar', description: desc, data});
+
+    const sql = `select * from materi`;
+        
+    db.query(sql, function (err, result) {
+        if (err) throw err;
+        res.render("index", { data: "", 
+            title: "belajar aja",
+            description: desc,
+            data: result });
+    });
 });
-app.get("/about", (req, res) => {
+
+
+app.get("/add-materi", (req, res) => {
     // res.sendFile("./view/about.html", { root: __dirname});
-    res.render("about", {title: "About"});
+    res.render("add-materi", {title: "Add-materi"});
 });
+
 // app.get("/contact", (req, res) => {
 //     res.redirect("/about");
 // });
-app.use((req, res) => {
-    // res.sendFile("./view/404.html", { root: __dirname});
-    res.render("404", {title: "404"});
+// app.use((req, res) => {
+//     // res.sendFile("./view/404.html", { root: __dirname});
+//     res.render("404", {title: "404"});
+// });
+
+app.get("/materi", (req, res) => {
+    // res.sendFile("./view/index.html", { root: __dirname});
+    // res.render("index", {title : 'Belajar', description: desc, data});
+
+    const sql = `select * from materi`;
+        
+    db.query(sql, function (err, result) {
+        if (err) throw err;
+        res.render("materi", { data: "", 
+            title: "Materi",
+            description: desc,
+            data: result });
+    });
+});
+
+app.get("/materi/:id", (req, res) => {
+    // res.sendFile("./view/index.html", { root: __dirname});
+    // res.render("index", {title : 'Belajar', description: desc, data});
+    const id = req.params.id;
+    const sql = `select * from materi where id = ${id}`;
+        
+    db.query(sql, function (err, result) {
+        if (err) throw err;
+        res.render("detail-materi", { data: "", 
+            title: "Detail materi",
+            data: result });
+    });
+});
+
+app.post('/add-materi', (req, res) => {
+    const { judul, narsum } = req.body;
+
+    const sql = 'INSERT INTO materi (judul, narsum) VALUES (?, ?)';
+    db.query(sql, [judul, narsum], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.send(`
+                <script>
+                    alert("Error menambahkan materi!");
+                    window.location.href = "/"; // Redirect ke halaman utama
+                </script>
+            `);
+        } else {
+            res.send(`
+                <script>
+                    alert("Materi berhasil ditambahkan!");
+                    window.location.href = "/"; // Redirect ke halaman utama
+                </script>
+            `);
+        }
+    });
 });

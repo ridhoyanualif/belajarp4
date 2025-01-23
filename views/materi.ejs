@@ -10,16 +10,19 @@
         <div class="login-container">
           <h2>Login</h2>
           <p><%= description %></p>
+          <a href="/add-materi" class="forgot-password">Add-Materi</a>
           <% if (data.length > 0) { %>
           <table class="data-table">
             <tr>
               <th>Judul</th>
               <th>Narsum</th>
+              <th>Status</th>
             </tr>
             <% data.forEach((d) => { %>
             <tr>
               <td><%= d.judul %></td>
               <td><%= d.narsum %></td>
+              <td><a href="/materi/<%= d.id %>" style="text-decoration: none; color: #007bff;">detail</a></td>
             </tr>
             <% }); %>
           </table>
