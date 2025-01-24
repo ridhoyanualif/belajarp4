@@ -95,13 +95,14 @@ app.get("/materi/:id", (req, res) => {
     });
 });
 
-app.get("/rm-materi/:id", (req, res) => {
+app.delete("/materi/:id", (req, res) => {
     // res.sendFile("./view/index.html", { root: __dirname});
     // res.render("index", {title : 'Belajar', description: desc, data});
     const id = req.params.id;
-    const sql = `delete from materi where id = ${id}`;
+    
+    const sql = `delete from materi where id = ?`;
         
-    db.query(sql, function (err, result) {
+    db.query(sql, [id], (err, result) => {
         if (err) {
             console.error(err);
             res.send(`

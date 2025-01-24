@@ -23,7 +23,7 @@
               <td><%= d.judul %></td>
               <td><%= d.narsum %></td>
               <td><a href="/materi/<%= d.id %>" style="text-decoration: none; color: #007bff;">detail</a></td>
-              <td><a href="/rm-materi/<%= d.id %>" style="text-decoration: none; color: #007bff;">delete</a></td>
+              <td><a class="delete" data-doc="<%= d.id %>" style="text-decoration: none; color: #007bff;">delete</a></td>
             </tr>
             <% }); %>
           </table>
@@ -44,6 +44,38 @@
             <a href="#" class="forgot-password">Forgot Password?</a>
           </form>
         </div>
+
+        <script>
+          const trashcans = document.querySelectorAll("a.delete");
+  
+          trashcans.forEach((trashcan) => {
+            trashcan.addEventListener("click", (e) => {
+              e.preventDefault();
+  
+              const endpoint = `/materi/${trashcan.dataset.doc}`;
+  
+              fetch(endpoint, {
+                method: "DELETE",
+              })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Gagal menghapus data");
+                }
+                return response.json();
+              })
+              .then((data) => {
+                if (data.redirect) {
+                  window.location.reload();
+                } else {
+                  console.log("Data berhasil dihapus");
+                }
+              })
+              .catch((err) => console.error("Terjadi kesalahan:",err));
+            });
+          });
+        </script>
       </main>
+
+      
 </body>
 </html>
