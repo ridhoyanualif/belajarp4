@@ -7,26 +7,27 @@
 </head>
 <body>
     <main>
-        <div class="login-container">
-          <a href="/add-materi" class="forgot-password">Add-Materi</a>
-          <% if (data.length > 0) { %>
-          <table class="data-table">
-            <tr>
-              <th>Judul</th>
-              <th>Narsum</th>
-              <th>Status</th>
-            </tr>
-            <% data.forEach((d) => { %>
-            <tr>
-              <td><%= d.judul %></td>
-              <td><%= d.narsum %></td>
-              <td><a href="/materi/<%= d.id %>" style="text-decoration: none; color: #007bff;">detail</a></td>
-            </tr>
-            <% }); %>
-          </table>
-          <% } else { %>
-          <p>Belum tersedia data</p>
-          <% } %>
+      <div class="login-container">
+        <h2><%= title %></h2>
+        <% if (data.length > 0) { %>
+          <% data.forEach((d) => { %>
+        <form action="/edit-materi/<%= d.id %>" method="POST" class="login-form">
+              <input type="hidden" id="id" name="id" value="<%= d.id %>" />
+            <div class="form-group">
+                <label for="judul">Judul</label>
+                <input type="text" id="judul" name="judul" value="<%= d.judul%>" required>
+            </div>
+            <div class="form-group">
+                <label for="narsum">Narasumber</label>
+                <input type="text" id="narsum" name="narsum" value="<%= d.narsum%>" required>
+            </div>
+            <button type="submit" class="login-btn">Submit</button>
+        </form>
+        <% }); %>
+    </div>
+    <% } else { %>
+      <p>Belum tersedia data</p>
+      <% } %>
       </main>
 </body>
 </html>
