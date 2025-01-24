@@ -61,6 +61,28 @@ app.get("/add-materi", (req, res) => {
     res.render("add-materi", {title: "Add-materi"});
 });
 
+app.get("/view-materi/:id", (req, res) => {
+    const id = req.params.id;
+    const sql = `SELECT judul, narsum, isi FROM materi WHERE id = ?`;
+  
+    db.query(sql, [id], (err, result) => {
+      if (err) throw err;
+  
+      if (result.length > 0) {
+        const materi = result[0];
+        res.render("view-materi", {
+          title: materi.judul,
+          judul: materi.judul,
+          narsum: materi.narsum,
+          isi: materi.isi,
+        });
+      } else {
+        res.status(404).render("404", { title: "Materi Tidak Ditemukan" });
+      }
+    });
+  });
+  
+
 // app.get("/contact", (req, res) => {
 //     res.redirect("/about");
 // });
@@ -148,10 +170,10 @@ app.post('/edit-materi/:id', (req, res) => {
 });
 
 app.post('/add-materi', (req, res) => {
-    const { judul, narsum } = req.body;
+    const { judul, narsum, isi } = req.body;
 
-    const sql = 'INSERT INTO materi (judul, narsum) VALUES (?, ?)';
-    db.query(sql, [judul, narsum], (err, result) => {
+    const sql = 'INSERT INTO materi (judul, narsum, isi) VALUES (?, ?, ?)';
+    db.query(sql, [judul, narsum, isi], (err, result) => {
         if (err) {
             console.error(err);
             res.send(`
